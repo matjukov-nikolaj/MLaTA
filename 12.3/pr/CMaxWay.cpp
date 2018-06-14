@@ -54,13 +54,12 @@ std::vector<int> CMaxWay::GetPath(const std::vector<int> &table, const std::vect
 	int currNode = 0;
 	currNode = node;
 
-	while (currNode != 0)
+	while (currNode != INT_MIN)
 	{
 		maxPath.push_back(currNode + 1);
 		currNode = path[currNode];
 	}
 
-	maxPath.push_back(m_firstNode);
 	return maxPath;
 }
 
@@ -97,7 +96,7 @@ void CMaxWay::GetSolution()
 {
 	std::vector<int> maxDistsTable(m_numberNodes, INT_MIN);
 	maxDistsTable[m_firstNode - 1] = 0;
-	std::vector<int> path(m_numberNodes);
+	std::vector<int> path(m_numberNodes, INT_MIN);
 	NegativeCycle cycle;
 
 	for (int i = 0; i < m_numberNodes; ++i)
@@ -121,7 +120,7 @@ void CMaxWay::ReadGraph()
 {
 	m_input >> m_numberNodes >> m_numberArcs >> m_firstNode;
 
-	if ((m_numberNodes <= 3 || m_numberNodes >= 1000) || (m_numberArcs <= 3 || m_numberArcs >= 500000))
+	if ((m_numberNodes < 3 || m_numberNodes > 1000) || (m_numberArcs < 3 || m_numberArcs > 500000))
 	{
 		throw std::invalid_argument("Invalid argument!");
 	}
